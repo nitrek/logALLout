@@ -1,0 +1,223 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Account Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Nitesh Singh" />
+    <style type="text/css">
+    body {
+        background-color: rgb(246, 246, 239);
+        color: #030303;
+        padding-top: 24px;
+        margin: 0;
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, sans-serif;
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 34px;
+        font-weight: 400;
+        letter-spacing: -.01em;
+        line-height: 40px;
+    }
+    
+    h2 {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 28px;
+    }
+    
+    h3 {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+    }
+    
+    h4 {
+        margin-bottom: 0;
+        margin-top: 24px;
+    }
+    
+    p {
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        font-weight: 400;
+        line-height: 20px;
+    }
+    
+    ul {
+        line-height: 20px;
+    }
+    
+    .content {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 8px;
+    }
+    
+    section {
+        margin-top: 24px;
+    }
+    
+    a {
+        text-decoration: none;
+    }
+    
+    a:hover {
+        text-decoration: underline;
+    }
+    
+    .demo {
+        min-height: 480px;
+    }
+    
+    .demo h3 {
+        margin-top: 24px;
+        margin-bottom: 6px;
+    }
+    
+    .demo > span {
+        text-align: center;
+    }
+    
+    .network {
+        padding: 8px;
+        background: white;
+        margin: 4px;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        width: 152px;
+    }
+    
+    .network img {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+    }
+    
+    .network {
+        color: #030303;
+        text-decoration: none !important;
+    }
+    
+    footer {
+        background: #424242;
+        margin-top: 64px;
+        padding: 16px;
+        font-size: 16px;
+        text-align: center;
+        font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+        color: white;
+        cursor: pointer;
+        margin-bottom: 49px;
+    }
+    
+    footer:hover {
+        text-decoration: underline;
+    }
+    
+    pre,
+    code {
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+    }
+    
+    @media only screen and (max-device-width: 480px) {
+        .content {
+            padding-top: 4px;
+        }
+        .network {
+            width: 128px;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>My Accounts</h1>
+		<section class="demo">
+            <span>
+                <p>
+                    <h3>You are logged in to:</h3>
+                    <div id="loggedIn">
+                        <h2>No platform</h2>
+                        <p>(or maybe you've disabled third party cookies, or you are using something like Privacy Badger?)</p>
+                        <br><br><br>
+                    </div>
+                </p>
+                <p>
+                    <h3>You are not logged in to:</h3>
+					<a class="network" href="index.html">Logout</a>
+                    <div id="notLoggedIn"></div>
+                </p>
+            </span>
+        </section>
+</div>
+    <script src="loggedInsites.js"></script>
+    <script>
+    var isFirstLoggedIn = true;
+
+    function displayResult(network, loggedIn) {
+        var id = loggedIn ? 'loggedIn' : 'notLoggedIn';
+        var favicon = faviconUri(network);
+        var url = network.domain + network.redirect;
+        var el = '<a target="_blank" href="' + url + '" target="_blank" class=network><img src=' + favicon + '><span>' + network.name + '</span></a>';
+        if (loggedIn && isFirstLoggedIn) {
+            isFirstLoggedIn = false;
+            document.getElementById(id).innerHTML = el;
+        } else {
+            document.getElementById(id).innerHTML += el;
+        }
+    }
+    leakSocialMediaAccounts(displayResult);
+
+    function faviconUri(network) {
+        var favicon = network.domain + '/favicon.ico';
+        if (network.name === 'Dropbox') {
+            favicon = 'https://www.dropbox.com/static/images/favicon.ico';
+        }
+        if (network.name === 'Youtube') {
+            favicon = 'https://www.youtube.com/favicon.ico';
+        }
+        if (network.name === 'Gmail') {
+            favicon = 'https://mail.google.com/favicon.ico';
+        }
+        return favicon;
+    }
+    </script>
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-85165266-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <a href="https://github.com/nitrek" target="_blank" id="about">
+        <footer>
+            Built with ♥ by Nitesh Singh
+        </footer>
+    </a>
+</body>
+
+</html>
